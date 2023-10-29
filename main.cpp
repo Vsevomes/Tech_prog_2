@@ -9,6 +9,7 @@ int main(void){
     std::string f_name, str, first, second;
     std::istringstream str_(str);
     std::ifstream file("task2.txt");
+    int size;
 
     choose_task();
     while(task_flag != 0){
@@ -22,6 +23,11 @@ int main(void){
             break;
         case 2:  
             system("cls");
+            std::cout << "Input str\n";
+            std::cin.ignore();
+            getline(std::cin, str);
+            size = std::count(str.begin(), str.end(), ' ') + 1;
+            std::cout << str << " " << size;
             /*while(getline(file, str)){
                 //std::cout << str;
                 swap_flag = 0;
