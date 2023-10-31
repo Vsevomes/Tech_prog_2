@@ -15,7 +15,6 @@ class group{
     int numb;
     float gpa;
     std::string* subjects;
-    student student;
 public:
 
 };
