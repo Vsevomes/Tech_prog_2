@@ -1,6 +1,6 @@
 #include "header.h"
 
-int task_flag, swap_flag;
+int task_flag, swap_flag, action_flag;
 
 int choose_task();
 
@@ -87,6 +87,18 @@ int choose_task(){
     return task_flag;
 }
 
+int menu(){
+    std::cout << "Select an action:\n";
+    std::cout << "1 - Add group\n";
+    std::cout << "2 - Add student\n";
+    std::cout << "3 - Delete group\n";
+    std::cout << "4 - Delete student\n";
+    std::cout << "5 - Edit group\n";
+    std::cout << "6 - edit student\n";
+    std::cout << "7 - Exit\n";
+    std::cin >> action_flag;
+    return action_flag;
+}
 
 /* возможный способ  ввода предметов для класса
             std::cout << "Input str\n";

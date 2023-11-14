@@ -15,8 +15,9 @@ public:
     int *_progress;
     student();
     student(std::string name_, int* progress_);
+    student(student& obj);
     ~student();
-    void set_name();
+    void set_name(std::string _name);
     void set_progress();
     void set_size();
     void get_name();
@@ -26,20 +27,28 @@ public:
 class group
 {
     int numb;
-    float gpa = 0;
+    float gpa;
     int count;
     std::string *subjects;
 
 public:
+    int _numb, _count;
+    float _gpa;
+    std::string* _subjects;
+
     group();
-    group(int numb_, int count_, std::string *subjects);
+    group(int numb_, float gpa_, int count_, std::string *subjects_);
+    group(group& obj);
     ~group();
-    void set_numb();
-    void set_count();
-    void set_subjects();
-    void get_numb();
-    void get_gpa();
-    void get_subjects();
+    void set_numb(int _numb);
+    void set_count(int _count);
+    void set_subjects(std::string* _subjects);
+    int get_numb();
+    int get_count();
+    float get_gpa();
+    std::string* get_subjects();
+    void set();
+    void get();
 };
 
 template <class T>
