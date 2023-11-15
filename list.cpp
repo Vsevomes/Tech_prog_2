@@ -13,7 +13,7 @@ list<T>::list(list<T>* obj){
         if (obj->first != NULL){
             elem<T>* temp = obj->first;
             while (temp != NULL) {
-                this->add(*(temp->data));
+                this->add(temp->data);
                 temp = temp->next;
             }
             std::cout << "List was copied!" << std::endl;
@@ -43,16 +43,16 @@ list<T>::~list(){
 }
 
 template <class T>
-void list<T>::add(T& x){
+void list<T>::add(T* x){
         elem<T>* temp = new elem<T>(x);
         if (first == NULL && last == NULL){
             first = last = temp;
-            first->data=last->data=&x;
+            first->data=last->data=x;
         }
         else {
             last->next = temp;
             last = temp;
-            last->data=&x;
+            last->data=x;
         }
         elem_count ++;
 }
@@ -99,19 +99,15 @@ void list<T>::remove(elem<T>* x){
 template <class T>
 void list<T>::display(){
         elem<T>* temp = first;
-        int i = 1;
         if (first == NULL) {
             std::cout << "List is empty!" << std::endl;
             return;
         }
         else {
             while(temp->next != NULL){ 
-                std::cout << "Element " << i << " - ";
                 (temp->data)->get();
                 temp = temp->next;
-                i++;
             }
-            std::cout << "Element " << i << " - ";
             (temp->data)->get();
             std::cout << std::endl;
         }
@@ -122,6 +118,17 @@ void list<T>::change(elem<T>* x){
     T* temp= x->data;
     temp->set();
     x->data = temp;
+}
+
+template <class T>
+void list<T>::sort(list<group>& groups) {
+    for (int i = 0; i < elem_count; i++) {
+        for (int j = 0; j < elem_count - 1; j++) {
+            if ((*(groups[j]->data)).get_numb() > (*(groups[j + 1]->data)).get_numb()) {
+                std::swap(*(groups[j]), *(groups[j + 1]));
+            }
+        }
+    }
 }
 
 template <class T>
