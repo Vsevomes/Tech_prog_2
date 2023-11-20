@@ -1,86 +1,83 @@
-#include "header.h"
+#include "group.h"
 
-group::group(){
-    numb = 0;
-    gpa = 0;
-    count = 0;
-    subjects = new std::string[count];
-    students = new list<student>();
-    std::cout << "Group parametrs set\n";
+group::group() {
+#ifdef DEBUG
+	std::cout << "Constructor group\n";
+#endif // DEBUG	
+	number = 0;
+	GPA = 0;
+	subjects;
+	students;
 }
 
-group::group(int numb_, float gpa_, int count_, std::string *subjects_, list<student>* students_){
-    numb = numb_;
-    count = count_;
-    gpa = gpa_;
-    subjects = subjects_;
-    students = students_;
-    std::cout << "Group parametrs set\n";
+group::group(group& g) {
+#ifdef DEBUG
+	std::cout << "Constructor group\n";
+#endif // DEBUG	
+	number = g.number;
+	GPA = g.GPA;
+	subjects = g.subjects;
+	students = g.students;
 }
 
-group::group(group& obj){
-    numb = obj.numb;
-    gpa = obj.gpa;
-    count = obj.count;
-    subjects = obj.subjects;
-    students = obj.students;
-    std::cout << "Group parametrs copied\n";
+group::~group() {
+	subjects.clear();
+	students.clear();
+#ifdef DEBUG
+	std::cout << "Destructor \n";
+#endif // DEBUG	
 }
 
-group::~group(){
-    delete [] subjects;
-    delete students;
+void group::setData() {
+
+	std::cout << "number: ";
+	std::cin >> this->number;
+	std::cout << '\n';
+
+	std::cout << "Subjects: ";
+	std::cout << '\n';
+	std::cout << "Count of subjects to set: ";
+	int cnt;
+	std::string str;
+	std::cin >> cnt;
+	for (int i = 0; i < cnt ;i++) {
+		std::cout << "subject #" << i << " = ";
+		std::cin >> str;
+		subjects.push_back(str);
+	}
+	std::cout << '\n';
+
+	std::cout << "Students: ";
+	std::cout << '\n';
+	std::cout << "Count of students to set: ";
+	Student* st;
+	std::cin >> cnt;
+	for (int i = 0; i < cnt;i++) {
+		st = new Student;
+		st->setData();
+		students.push_back(*st);
+	}
+	std::cout << '\n';
+
+	std::cout << "GPA: ";
+
+	std::cout << '\n';
 }
 
-void group::set_numb(int _numb){
-    numb = _numb;
-}
-
-void group::set_count(int _count){
-    count = _count;
-}
-
-void group::set_subjects(std::string* _subjects){
-    subjects = _subjects;
-}
-
-int group::get_numb(){
-    return numb;
-}
-
-int group::get_count(){
-    return count;
-}
-
-float group::get_gpa(){
-    return gpa;
-}
-
-std::string* group::get_subjects(){
-    return subjects;
-}
-
-void group::set(){
-    std::cout << "Enter values:\n";
-    std::cout << "Number of group: ";
-    std::cin >> numb;
-    std::cout << "Number of subjects: ";
-    std::cin >> count;
-    subjects = new std::string[count];
-    std::cout << "Subjects: ";
-    for(int i = 0; i < count; i++){
-        std::cin >> subjects[i];
-    }
-    std:: cout << std::endl;
-}
-
-void group::get(){
-    std::cout << "Group " << numb << "\n";
-    std::cout << "Subjects: ";
-    for(int i = 0; i < count; i++){
-        std::cout << subjects[i] << " ";
-    }
-    std::cout << "\n";
-    std::cout << "GPA: " << gpa << "\n";
-    std::cout << "\n";
+void group::getData() {
+	std::cout << "\nGroup\n";
+	std::cout << "number \t:\t" << number << '\n';
+	std::cout << "subjects :\t";
+	int cnt = subjects.size();
+	for (int i = 0;i < cnt;i++) {
+		std::cout << subjects[i] << ' ';
+	}
+	std::cout << '\n';
+	std::cout << "GPA \t:\t" << GPA << '\n';
+	std::cout << "\nStudents: ";
+	cnt = students.size();
+	for (int i = 0;i < cnt;i++) {
+		students[i].getData();
+	}
+	std::cout << '\n';
 }

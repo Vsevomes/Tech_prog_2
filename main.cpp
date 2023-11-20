@@ -1,4 +1,5 @@
-#include "header.h"
+#include "keeper.h"
+#include "group.h"
 
 int task_flag, swap_flag, action_flag, ind;
 
@@ -102,19 +103,11 @@ int menu(){
     return action_flag;
 }
 
-/* возможный способ  ввода предметов для класса
-            std::cout << "Input str\n";
-            std::cin.ignore();
-            getline(std::cin, str);
-            size = std::count(str.begin(), str.end(), ' ') + 1;
-            std::cout << str << " " << size;
-*/
-
 void menu_task1(){
 
-    list<group> groups;
+    Keeper<group>* groups;
     group* group_;
-    student* student_;
+    Student* student_;
 
     menu();
     while(action_flag != 0){
@@ -123,10 +116,10 @@ void menu_task1(){
             system("cls");
             group_ = new group();
             system("cls");
-            group_->set();   
-            groups.add(group_);
-            if (groups.elem_count > 1){
-                groups.sort(groups);
+            group_->setData();   
+            groups->add(group_);
+            if (groups->getCount() > 1){
+                groups->sort();
             }
             system("pause");
             system("cls");
@@ -135,8 +128,8 @@ void menu_task1(){
         case 2:  
             system("cls");
             std::cout << "Choose group number:\n";
-            for (int i = 0; i < groups.elem_count; i++){
-                std::cout << (*(groups[i]->data)).get_numb() << "\n";
+            for (int i = 0; i < groups->getCount(); i++){
+                std::cout << (*groups)[i].get_numb() << "\n";
             }
             if (std::cin)
             system("pause");
@@ -148,8 +141,8 @@ void menu_task1(){
             std::cout << "Insert number of element which you wnat to delete: ";
                 std::cin >> ind;
                 try{
-                    if (ind <= groups.elem_count)
-                        groups.remove(groups[ind - 1]);
+                    if (ind <= groups->getCount())
+                        groups->remove(ind);
                     else
                         throw std::string{"Number is outside the list\n"};
                 }
@@ -162,7 +155,7 @@ void menu_task1(){
             break;
         case 7:
             system("cls");
-            groups.display();
+            groups->display();
             system("pause");
             system("cls");
             menu();
@@ -177,3 +170,16 @@ void menu_task1(){
         }
     }
 }
+
+// Keeper<Group>* keep = new Keeper<Group>;
+//     Group* group = new Group;
+
+//     group->setData();
+//     keep->addElement(group);
+
+//     group = new Group;
+//     group->setData();
+//     keep->addElement(group);
+
+//     keep->sortirovka();
+//     keep->displayKeep();

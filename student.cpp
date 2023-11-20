@@ -1,71 +1,57 @@
-#include "header.h"
+#include "student.h"
+#include "group.h"
 
-student::student(){
-    name = "";
-    size = 0;
-    progress = new int[size];
-    std::cout << "Student parametrs set\n";
+Student::Student() {
+#ifdef DEBUG
+	std::cout << "Constructor Student\n";
+#endif // DEBUG	
+	FIO = "";
+	assesments;
+    GPA_local = 0.0;
 }
 
-student::student(std::string name_, int size_, int* progress_){
-    name = name_;
-    size = size_;
-    progress = progress_;
-    std::cout << "Student parametrs set\n";
+Student::~Student() {
+	assesments.clear();
+#ifdef DEBUG
+	std::cout << "Destructor Student\n";
+#endif // DEBUG	
 }
 
-student::student(student& obj){
-    name = obj.name;
-    size = obj.size;
-    progress = obj.progress;
-    std::cout << "Student parametrs copied";
-}
 
-student::~student(){
-    delete [] progress;
-}
+void Student::setData() {
 
-void student::set_name(std::string _name){
-    name = _name;
-}
+	std::cout << "FIO: ";
+	std::cin >> this->FIO;
+	std::cout << '\n';
 
-void student::set_size(int _size){
-    size = _size;
-}
+	std::cout << "Assesments: ";
+	std::cout << '\n';
+	std::cout << "Count of subjects to set: ";
+	int cnt;
+	int val;
+	std::cin >> cnt;
+	for (int i = 0; i < cnt;i++) {
+		std::cout << "assesment #" << i << " = ";
+		std::cin >> val;
+		assesments.push_back(val);
+	}
+	std::cout << '\n';
 
-void student::set_progress(int* _progress){
-    progress = _progress;
-}
-
-std::string student::get_name(){
-    return name;
-}
-
-int student::get_size(){
-    return size;
-}
-
-int* student::get_progress(){
-    return progress;
-}
-
-void student::set(){
-
-    std::cout << "Enter values:\n";
-    std::cout << "Students name: ";
-    std::cin >> name;
-    std::cout << "Enter grades: ";
-    for (int i = 0; i < size; i++){
-        std::cin >> progress[i];
+    for(int i = 0; i < assesments.size(); i++){
+        GPA_local += assesments[i];
     }
-    std::cout << std::endl;
+    GPA_local /= assesments.size() * 1.0;
+
 }
 
-void student::get(){
-    std::cout << "Student " << name << "\n";
-    std::cout << "Grades ";
-    for (int i = 0; i < size; i++){
-        std::cout << progress[i] << " ";
-    }
-    std::cout << "\n";
+void Student::getData() {
+	std::cout << "Student\n";
+	std::cout << "FIO \t:\t" << FIO << '\n';
+	std::cout << "assesments \t:\t";
+	int cnt = assesments.size();
+	for (int i = 0;i < cnt;i++) {
+		std::cout << assesments[i] << ' ';
+	}
+	std::cout << '\n';
+    std::cout << GPA_local;
 }
