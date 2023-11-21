@@ -30,4 +30,8 @@ public:
 	std::vector<int>& getAssesment() {
 		return assesments;
 	}
+
+	float getGPA_local(){
+		return GPA_local;
+	}
 };

@@ -5,9 +5,12 @@ group::group() {
 	std::cout << "Constructor group\n";
 #endif // DEBUG	
 	number = 0;
-	GPA = 0;
+	GPA = 0.0;
 	subjects;
-	students;
+	Student* st = new Student;
+	students.push_back(*st);
+	students.pop_back();
+	delete st;
 }
 
 group::group(group& g) {
@@ -41,7 +44,7 @@ void group::setData() {
 	std::string str;
 	std::cin >> cnt;
 	for (int i = 0; i < cnt ;i++) {
-		std::cout << "subject #" << i << " = ";
+		std::cout << "subject #" << i + 1 << " = ";
 		std::cin >> str;
 		subjects.push_back(str);
 	}
@@ -58,26 +61,65 @@ void group::setData() {
 		students.push_back(*st);
 	}
 	std::cout << '\n';
-
-	std::cout << "GPA: ";
-
-	std::cout << '\n';
 }
 
 void group::getData() {
-	std::cout << "\nGroup\n";
-	std::cout << "number \t:\t" << number << '\n';
+	std::cout << "\nGroup number \t:\t" << number << '\n';
 	std::cout << "subjects :\t";
 	int cnt = subjects.size();
-	for (int i = 0;i < cnt;i++) {
+	for (int i = 0; i < cnt; i++) {
 		std::cout << subjects[i] << ' ';
 	}
 	std::cout << '\n';
+	count_GPA();
 	std::cout << "GPA \t:\t" << GPA << '\n';
 	std::cout << "\nStudents: ";
 	cnt = students.size();
-	for (int i = 0;i < cnt;i++) {
+	for (int i = 0; i < cnt; i++) {
 		students[i].getData();
 	}
 	std::cout << '\n';
+}
+
+void group::count_GPA(){
+	GPA = 0;
+	for (int i = 0; i < students.size(); i++){
+		GPA += students[i].getGPA_local();
+	}
+	GPA /= students.size() * 1.0;
+}
+
+void group::addStudent(){
+	Student* st;
+	st = new Student;
+	st->setData();
+	students.push_back(*st);
+}
+
+void group::delStudent(const int ind){
+	students.erase(students.begin() + ind - 1);
+}
+
+int group::empStudent(){
+	return students.size();
+}
+
+void group::editStudent(const int index) {
+	std::cout << "\nChange Data\n";
+	Student* st;
+	st = new Student;
+	students.erase(students.begin() + index - 1);
+	st->setData();
+	students.insert(students.begin() + index - 1, *st);
+}
+
+int group::bestStud(){
+	int flag = 0;
+	for (int i = 0; i < students.size(); i++){
+		if (students[i].getGPA_local() > 4){
+			std::cout << "Group " << this->number << " - " << students[i].getFIO() << std::endl;
+			flag = 1;
+		}
+	}
+	return flag;
 }

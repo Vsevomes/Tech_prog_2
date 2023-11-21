@@ -1,7 +1,7 @@
 #include "keeper.h"
 #include "group.h"
 
-int task_flag, swap_flag, action_flag, ind;
+int task_flag, swap_flag, action_flag, ind, group_ind, stud_ind;
 
 int choose_task();
 void menu_task1();
@@ -10,7 +10,6 @@ int main(void){
 
     std::string f_name, str, first, second;   
     std::ifstream file;
-    //int size;
 
     choose_task();
     while(task_flag != 0){
@@ -98,6 +97,7 @@ int menu(){
     std::cout << "5 - Edit group\n";
     std::cout << "6 - Edit student\n";
     std::cout << "7 - Display all\n";
+    std::cout << "8 - Display best students\n";
     std::cout << "0 - Exit\n";
     std::cin >> action_flag;
     return action_flag;
@@ -105,7 +105,7 @@ int menu(){
 
 void menu_task1(){
 
-    Keeper<group>* groups;
+    Keeper<group>* groups = new Keeper<group>;
     group* group_;
     Student* student_;
 
@@ -127,28 +127,168 @@ void menu_task1(){
             break;
         case 2:  
             system("cls");
-            std::cout << "Choose group number:\n";
-            for (int i = 0; i < groups->getCount(); i++){
-                std::cout << (*groups)[i].get_numb() << "\n";
+            try{
+                if (groups->getCount() != 0){
+                    std::cout << "Choose group:\n";
+                    for (int i = 1; i < groups->getCount() + 1; i++){
+                        std::cout << i << " - Group " << (*groups)[i].get_numb() << "\n";
+                    }
+                    std::cout << "Insert number: ";
+                    std::cin >> group_ind;
+                    (*groups)[group_ind].addStudent();
+                    (*groups)[group_ind].count_GPA();
+                }
+                else
+                    throw std::string{"Group list is empty\n"};
             }
-            if (std::cin)
+            catch(std::string mes){
+                std::cout << mes;
+            }
             system("pause");
             system("cls");
             menu();
             break;
         case 3:
             system("cls");
-            std::cout << "Insert number of element which you wnat to delete: ";
-                std::cin >> ind;
-                try{
-                    if (ind <= groups->getCount())
-                        groups->remove(ind);
-                    else
-                        throw std::string{"Number is outside the list\n"};
+            try{
+                if (groups->getCount() != 0){
+                    std::cout << "Choose group you want to delete:\n";
+                    for (int i = 1; i < groups->getCount() + 1; i++){
+                        std::cout << i << " - Group " << (*groups)[i].get_numb() << "\n";
+                    }
+                    std::cout << "Insert number: ";
+                    std::cin >> ind;
+                    try{
+                        if (ind <= groups->getCount())
+                            groups->remove(ind);
+                        else
+                            throw std::string{"Number is outside the list\n"};
+                    }
+                    catch(std::string mes){
+                        std::cout << mes;
+                    }
                 }
-                catch(std::string mes){
-                    std::cout << mes;
+                else
+                    throw std::string{"Group list is empty\n"};
+            }
+            catch(std::string mes){
+                std::cout << mes;
+            }
+            system("pause");
+            system("cls");
+            menu();
+            break;
+        case 4:
+            system("cls");
+            try{
+                if (groups->getCount() != 0){
+                    std::cout << "Choose group:\n";
+                    for (int i = 1; i < groups->getCount() + 1; i++){
+                        std::cout << i << " - Group " << (*groups)[i].get_numb() << "\n";
+                    }     
+                            std::cout << "Insert number: ";
+                            std::cin >> group_ind;
+                    try{
+                        if((*groups)[group_ind].empStudent() != 0){
+                            system("cls");
+                            (*groups)[group_ind].getData();
+                            std::cout << "Insert number of student: ";
+                            std::cin >> stud_ind;
+                            try{
+                                if (stud_ind <= (*groups)[group_ind].empStudent()){
+                                    (*groups)[group_ind].delStudent(stud_ind);
+                                    (*groups)[group_ind].count_GPA();
+                                }
+                                else
+                                    throw std::string{"Number is outside the list\n"};
+                                }
+                            catch(std::string mes){
+                                std::cout << mes;
+                            }
+                        }
+                        else
+                            throw std::string{"Students list is empty\n"};
+                    }
+                    catch(std::string mes){
+                        std::cout << mes;
+            } 
                 }
+                else
+                    throw std::string{"Group list is empty\n"};
+            }
+            catch(std::string mes){
+                std::cout << mes;
+            } 
+            system("pause");
+            system("cls");
+            menu();
+            break;
+        case 5:
+            system("cls");
+            try{
+                if (groups->getCount() != 0){
+                    std::cout << "Choose group:\n";
+                    for (int i = 1; i < groups->getCount() + 1; i++){
+                        std::cout << i << " - Group " << (*groups)[i].get_numb() << "\n";
+                    }
+                    std::cout << "Insert number: ";
+                    std::cin >> group_ind;
+                    group_ = new group();
+                    system("cls");
+                    groups->editElement(group_ind, group_);
+                }
+                else
+                    throw std::string{"Group list is empty\n"};
+            }
+            catch(std::string mes){
+                std::cout << mes;
+            }
+            system("pause");
+            system("cls");
+            menu();
+            break;
+        case 6:
+            system("cls");
+            try{
+                if (groups->getCount() != 0){
+                    std::cout << "Choose group:\n";
+                    for (int i = 1; i < groups->getCount() + 1; i++){
+                        std::cout << i << " - Group " << (*groups)[i].get_numb() << "\n";
+                    }     
+                            std::cout << "Insert number: ";
+                            std::cin >> group_ind;
+                    try{
+                        if((*groups)[group_ind].empStudent() != 0){
+                            system("cls");
+                            (*groups)[group_ind].getData();
+                            std::cout << "Insert number of student: ";
+                            std::cin >> stud_ind;
+                            try{
+                                if (stud_ind <= (*groups)[group_ind].empStudent()){
+                                    system("cls");
+                                    (*groups)[group_ind].editStudent(stud_ind);
+                                    (*groups)[group_ind].count_GPA();
+                                }
+                                else
+                                    throw std::string{"Number is outside the list\n"};
+                                }
+                            catch(std::string mes){
+                                std::cout << mes;
+                            }
+                        }
+                        else
+                            throw std::string{"Students list is empty\n"};
+                    }
+                    catch(std::string mes){
+                        std::cout << mes;
+            } 
+                }
+                else
+                    throw std::string{"Group list is empty\n"};
+            }
+            catch(std::string mes){
+                std::cout << mes;
+            } 
             system("pause");
             system("cls");
             menu();
@@ -156,6 +296,13 @@ void menu_task1(){
         case 7:
             system("cls");
             groups->display();
+            system("pause");
+            system("cls");
+            menu();
+            break;
+        case 8:
+            system("cls");
+            groups->showBest();
             system("pause");
             system("cls");
             menu();
@@ -170,16 +317,3 @@ void menu_task1(){
         }
     }
 }
-
-// Keeper<Group>* keep = new Keeper<Group>;
-//     Group* group = new Group;
-
-//     group->setData();
-//     keep->addElement(group);
-
-//     group = new Group;
-//     group->setData();
-//     keep->addElement(group);
-
-//     keep->sortirovka();
-//     keep->displayKeep();

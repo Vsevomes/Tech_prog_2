@@ -171,7 +171,9 @@ public:
 
                 if (((*this)[j].get_numb()) > ((*this)[j + 1].get_numb()))
                 {
-                    std::swap((*this)[j], (*this)[j + 1]);
+                    T temp = (*this)[j];
+                    (*this)[j] = (*this)[j + 1];
+                    (*this)[j + 1] = temp;
                 }
             }
         }
@@ -192,25 +194,41 @@ public:
             std::cout << "\nCount of Group elements: " << getCount() << std::endl
                       << std::endl;
         }
-        catch (const std::exception &ex)
+        catch (const std::string &str)
         {
 
-            std::cout << ex.what() << '\n';
+            std::cout << str << '\n';
         }
     }
 
-    void editElement(const int index)
-    {
+    void editElement(const int index, T* g)
+    {   
         std::cout << "\nChange Data\n";
-        (*this)[index].setData();
+        this->remove(index);
+        g->setData();
+        this->add(g);
+            if (this->getCount() > 1){
+                this->sort();
+        }
     }
 
-    void editElementStudent(const int index) {
-        std::cout << "\nChange Data\n";
-        (*this)[index].getData();
-        int ind;
-        std::cout << "Enter students index: ";
-        std::cin >> ind;
-        (*this)[index].editStudent(ind);
+    void showBest(){
+        int flag = 0;
+        try
+        {
+            if (getCount() == 0)
+                throw("Keeper is empty\n");
+            for (int i = 1;i < getCount() + 1;i++) {                        
+                    flag += (*this)[i].bestStud();
+            }
+            if(flag == 0){
+                std::cout << "There are no good students :(" << std::endl;
+            }
+        }
+        catch (const std::string &str)
+        {
+            std::cout << str << '\n';
+        }
     }
+
 };

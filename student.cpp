@@ -17,16 +17,14 @@ Student::~Student() {
 #endif // DEBUG	
 }
 
-
 void Student::setData() {
-
 	std::cout << "FIO: ";
 	std::cin >> this->FIO;
 	std::cout << '\n';
 
 	std::cout << "Assesments: ";
 	std::cout << '\n';
-	std::cout << "Count of subjects to set: ";
+	std::cout << "Count of marks to set: ";
 	int cnt;
 	int val;
 	std::cin >> cnt;
@@ -49,9 +47,8 @@ void Student::getData() {
 	std::cout << "FIO \t:\t" << FIO << '\n';
 	std::cout << "assesments \t:\t";
 	int cnt = assesments.size();
-	for (int i = 0;i < cnt;i++) {
+	for (int i = 0; i < cnt; i++) {
 		std::cout << assesments[i] << ' ';
 	}
 	std::cout << '\n';
-    std::cout << GPA_local;
 }

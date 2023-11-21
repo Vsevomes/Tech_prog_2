@@ -11,7 +11,7 @@ class group {
 private:
 	int number;
 	std::vector<std::string> subjects;
-	int GPA;
+	float GPA;
 	std::vector<Student> students;
 	//Keeper<Student>* students;
 public:
@@ -21,6 +21,11 @@ public:
 	void getData();
 	void setData();
 	void editStudent(const int index);
+	void addStudent();
+	void delStudent(const int ind);
+	int empStudent();
+	void count_GPA();
+	int bestStud();
 
 	void setNumber(int& a) {
 		number = a;
@@ -34,7 +39,7 @@ public:
 		GPA = a;
 	}
 
-	int& get_numb() {
+	int get_numb() {
 		return number;
 	}
 
@@ -42,7 +47,7 @@ public:
 		return subjects;
 	}
 
-	int& getGPA() {
+	int getGPA() {
 		return GPA;
 	}
 };
