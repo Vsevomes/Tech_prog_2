@@ -5,6 +5,7 @@ int task_flag, swap_flag, action_flag, ind, group_ind, stud_ind;
 
 int choose_task();
 void menu_task1();
+int menu();
 
 int main(void){
 
@@ -211,7 +212,7 @@ void menu_task1(){
                     }
                     catch(std::string mes){
                         std::cout << mes;
-            } 
+                    } 
                 }
                 else
                     throw std::string{"Group list is empty\n"};
@@ -295,14 +296,32 @@ void menu_task1(){
             break;
         case 7:
             system("cls");
-            groups->display();
+            try{
+                if (groups->getCount() != 0){
+                    groups->display();
+                }
+                else
+                    throw std::string{"Group list is empty\n"};
+            }
+            catch(std::string mes){
+                std::cout << mes;
+            }
             system("pause");
             system("cls");
             menu();
             break;
         case 8:
             system("cls");
-            groups->showBest();
+            try{
+                if (groups->getCount() != 0){
+                    groups->showBest();
+                }
+                else
+                    throw std::string{"Group list is empty\n"};
+            }
+            catch(std::string mes){
+                std::cout << mes;
+            }
             system("pause");
             system("cls");
             menu();
